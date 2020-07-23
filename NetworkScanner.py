@@ -10,10 +10,18 @@ def scan(ip):
     answered_list =  scapy.srp(arp_request_broadcast, timeout=1, verbose=False)[0] # scapy.srp() send/recieve packets | [0] for answered [1] for unanswered
     
     #Parse : 
-    print("IP\t\t\tMAC Address\n---------------------------------------------------")
-    for element in answered_list: #Parse getted data 
-         print(element[1].psrc +"\t\t" + element[1].hwsrc) #Answer by documentation contains two lists, first[0] is request , so we don't need this so we use element[1]
-         print("---------------------------------------------------")# As using element[1].show() we see all available data, but for us valuable is only psrc & hwsrc
     
-#"192.168.1.1/24"
-scan(ip_input + "/24")
+    clients_list = []
+    for element in answered_list: #Parse getted data 
+         client_dict = {"ip":element[1].psrc,"mac": element[1].hwsrc} #Answer by documentation contains two lists, first[0] is request , so we don't need this so we use element[1]
+         clients_list.append(client_dict) # As using element[1].show() we see all available data, but for us valuable is only psrc & hwsrc
+    return clients_list
+
+def print_results(results_list):
+    print("IP\t\t\tMAC Address\n---------------------------------------------------")
+    for client in results_list:
+        print(client["ip"] + "\t\t" + client["mac"])
+
+#"IP" + range
+scan_result = scan(ip_input + "/24")
+print_results(scan_result)
