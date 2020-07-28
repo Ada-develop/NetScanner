@@ -1,0 +1,2 @@
+Enter the IP that you want to scan : 
+Set the range , options 8 / 16 / 24 :

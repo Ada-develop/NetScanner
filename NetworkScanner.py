@@ -1,7 +1,13 @@
 #!/usr/bin/env/ python
 import scapy.all as scapy
+from optparse import OptionParser
+
+parser = OptionParser()
+
 print("Enter the IP that you want to scan : ")
 ip_input = input()
+print("Set the range , options 8 / 16 / 24 :"  )
+ranger = input()
 
 def scan(ip):
     arp_request = scapy.ARP(pdst = ip) # Scanning ARP by IP
@@ -23,5 +29,5 @@ def print_results(results_list):
         print(client["ip"] + "\t\t" + client["mac"])
 
 #"IP" + range
-scan_result = scan(ip_input + "/24")
+scan_result = scan(ip_input + "/" +ranger)
 print_results(scan_result)
